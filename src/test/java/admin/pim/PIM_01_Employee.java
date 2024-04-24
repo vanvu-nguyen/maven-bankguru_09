@@ -127,6 +127,6 @@ public class PIM_01_Employee extends BaseTest {
 
     @AfterClass
     public void afterClass() {
-        //closeBrowser(driver);
+        closeBrowser(driver);
     }
 }
