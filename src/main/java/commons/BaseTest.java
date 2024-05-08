@@ -31,11 +31,9 @@ public class BaseTest {
     }
 
     protected WebDriver getBrowserDriver(String browser) {
-        //WebDriver driver;
         BrowserList browserName = BrowserList.valueOf(browser.toUpperCase());
         switch (browserName) {
             case CHROME: driver = new ChromeDriver();
-                // Due to occur error when finding element with Firefox browser ->> switch to Chrome
                 break;
             case EDGE: driver = new EdgeDriver();
                 break;
@@ -57,40 +55,12 @@ public class BaseTest {
         BrowserList browserName = BrowserList.valueOf(browser.toUpperCase());
         switch (browserName) {
             case CHROME:
-                /*//[Browser config] Install extension
-                ChromeOptions options = new ChromeOptions();
-                path = Paths.get(GlobalConstants.BROWSER_EXTENTION_PATH + "Wappalyzer.crx");
-                extensionFilePath = new File(path.toUri());
-                options.addExtensions(extensionFilePath);
-                driver = new ChromeDriver(options);
-                Browser log,... :see document
-                */
-
                 driver = new ChromeDriver();
                 break;
             case EDGE:
-                /*//[Browser config] Install extension
-                EdgeOptions edgeOption = new EdgeOptions();
-                path = Paths.get(GlobalConstants.BROWSER_EXTENTION_PATH + "Wappalyzer.crx");
-                extensionFilePath = new File(path.toUri());
-                edgeOption.addExtensions(extensionFilePath);
-                driver = new EdgeDriver(edgeOption);
-                Browser log,... :see document
-                */
-
                 driver = new EdgeDriver();
                 break;
             case FIREFOX:
-                /*//[Browser config] Install extension
-                driver = new FirefoxDriver();
-                Path xpiPath = Paths.get(GlobalConstants.BROWSER_EXTENTION_PATH + "Wappalyzer.xpi");
-                FirefoxDriver ffDriver = (FirefoxDriver) driver;
-                ffDriver.installExtension(xpiPath);
-                driver = ffDriver;
-                Browser log,... :see document
-                */
-
-
                 driver = new FirefoxDriver();
                 break;
             case SAFARI: driver = new SafariDriver();

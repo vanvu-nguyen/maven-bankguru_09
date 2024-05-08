@@ -2,9 +2,9 @@ package pageObjects.admin;
 
 import AdminPageUIs.PersonalDetailsPUI;
 import commons.BaseAction;
-import commons.GlobalConstants;
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
+import pojoData.EmployeeInfo;
 
 public class PersonalDetailsPO extends BaseAction {
     private WebDriver driver;
@@ -41,39 +41,38 @@ public class PersonalDetailsPO extends BaseAction {
         return PageGeneratorManager.getEmployeeListPage(driver);
     }
 
-    public void inputMiddleName() {
+    public void inputMiddleName(EmployeeInfo employeeInfo) {
         waitForElementVisible(driver, PersonalDetailsPUI.DETAILS_MIDDLENAME_TEXTBOX);
-        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_MIDDLENAME_TEXTBOX, GlobalConstants.ORANGEHRM_DATATEST_MIDDLENAME);
+        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_MIDDLENAME_TEXTBOX, employeeInfo.getMiddleName());
     }
 
-    public void inputOtherId() {
+    public void inputOtherId(EmployeeInfo employeeInfo) {
         waitForElementVisible(driver, PersonalDetailsPUI.DETAILS_OTHERID_TEXTBOX);
-        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_OTHERID_TEXTBOX, GlobalConstants.ORANGEHRM_DATATEST_OTHERID);
-    }
+        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_OTHERID_TEXTBOX, employeeInfo.getOtherId());    }
 
-    public void inputDriverLicenseNumber() {
+    public void inputDriverLicenseNumber(EmployeeInfo employeeInfo) {
         waitForElementVisible(driver, PersonalDetailsPUI.DETAILS_DRIVER_LICENSE_TEXTBOX);
-        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_DRIVER_LICENSE_TEXTBOX, GlobalConstants.ORANGEHRM_DATATEST_DRIVER_LICENSE);
+        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_DRIVER_LICENSE_TEXTBOX, employeeInfo.getDriverLicense());
     }
 
-    public void inputLicenseExpiryDate() {
+    public void inputLicenseExpiryDate(EmployeeInfo employeeInfo) {
         waitForElementVisible(driver, PersonalDetailsPUI.DETAILS_LICENSE_EXPIRY_DATE_DROPDOWN);
-        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_LICENSE_EXPIRY_DATE_DROPDOWN, GlobalConstants.ORANGEHRM_DATATEST_LICENSE_EXPIRY_DATE);
+        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_LICENSE_EXPIRY_DATE_DROPDOWN, employeeInfo.getLicenseExpiryDate());
     }
 
-    public void selectNationality() {
+    public void selectNationality(EmployeeInfo employeeInfo) {
         waitForElementClickable(driver, PersonalDetailsPUI.DETAILS_PARENT_NATIONALITY);
-        selectItemInCustomDropdown(driver, PersonalDetailsPUI.DETAILS_PARENT_NATIONALITY, PersonalDetailsPUI.DETAILS_CHILD_NATIONALITY, "Japanese");
+        selectItemInCustomDropdown(driver, PersonalDetailsPUI.DETAILS_PARENT_NATIONALITY, PersonalDetailsPUI.DETAILS_CHILD_NATIONALITY, employeeInfo.getNationality());
     }
 
-    public void selectMaritalStatus() {
+    public void selectMaritalStatus(EmployeeInfo employeeInfo) {
         waitForElementClickable(driver, PersonalDetailsPUI.DETAILS_PARENT_MARITAL);
-        selectItemInCustomDropdown(driver, PersonalDetailsPUI.DETAILS_PARENT_MARITAL, PersonalDetailsPUI.DETAILS_CHILD_MARITAL, "Married");
+        selectItemInCustomDropdown(driver, PersonalDetailsPUI.DETAILS_PARENT_MARITAL, PersonalDetailsPUI.DETAILS_CHILD_MARITAL, employeeInfo.getMaritalStatus());
     }
 
-    public void inputDateOfBirth() {
+    public void inputDateOfBirth(EmployeeInfo employeeInfo) {
         waitForElementVisible(driver, PersonalDetailsPUI.DETAILS_DOB_DROPDOWN);
-        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_DOB_DROPDOWN, GlobalConstants.ORANGEHRM_DATATEST_DOB);
+        senkeyToElement(driver, PersonalDetailsPUI.DETAILS_DOB_DROPDOWN, employeeInfo.getDateOfBirth());
     }
 
     public void selectMaleGender() {
@@ -85,5 +84,17 @@ public class PersonalDetailsPO extends BaseAction {
         waitForElementClickable(driver, PersonalDetailsPUI.MAIN_INFOR_SAVE_BUTTON);
         clickToElement(driver, PersonalDetailsPUI.MAIN_INFOR_SAVE_BUTTON);
         waitLoadingSpinnerInvisible();
+    }
+
+    public void updateEmployeeInfo(EmployeeInfo employeeInfo) {
+        inputMiddleName(employeeInfo);
+        inputOtherId(employeeInfo);
+        inputDriverLicenseNumber(employeeInfo);
+        inputLicenseExpiryDate(employeeInfo);
+        selectNationality(employeeInfo);
+        selectMaritalStatus(employeeInfo);
+        inputDateOfBirth(employeeInfo);
+        selectMaleGender();
+        clickToSaveButtonOfDetails();
     }
 }

@@ -1,25 +1,29 @@
 package admin.pim;
 
-import AdminPageUIs.PersonalDetailsPUI;
+import com.github.javafaker.Faker;
 import commons.BaseTest;
-import commons.GlobalConstants;
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pageObjects.admin.*;
+import pojoData.AdminInfo;
+import pojoData.EmployeeInfo;
 import reportConfig.ExtentTestManager;
 
 import java.lang.reflect.Method;
 
 public class PIM_01_Employee extends BaseTest {
     private WebDriver driver;
-    private String browserName, employeeId;
+    private String browserName;
     private LoginPO loginPage;
     private DashboardPO dashboardPage;
     private EmployeeListPO employeeListPage;
     private AddEmployeePO addEmployeePage;
     private PersonalDetailsPO personalDetailsPage;
+    private AdminInfo adminInfo;
+    private EmployeeInfo employeeInfo;
+    private Faker faker;
 
     @Parameters({"url", "browser"})
     @BeforeClass
@@ -28,61 +32,82 @@ public class PIM_01_Employee extends BaseTest {
         browserName = browser;
         loginPage = PageGeneratorManager.getLoginPage(driver);
 
-        loginPage.senkeyToUsernameTextbox();
+        /*loginPage.senkeyToUsernameTextbox();
         loginPage.senkeyToPasswordTextbox();
-        dashboardPage = loginPage.clickToLoginButton();
+        dashboardPage = loginPage.clickToLoginButton();*/
 
+        dashboardPage = loginPage.loginToAdminSite();
         employeeListPage = dashboardPage.clickToPimModule();
+
+        adminInfo = AdminInfo.getAdmin();
+
+        employeeInfo = EmployeeInfo.getEmployee();
+        employeeInfo.setFirstName(faker.name().firstName());
+        employeeInfo.setLastName(faker.name().lastName());
+        employeeInfo.setMiddleName(faker.name().lastName());
+        employeeInfo.setOtherId(faker.phoneNumber().cellPhone());
+        employeeInfo.setDriverLicense(faker.idNumber().valid());
+        employeeInfo.setLicenseExpiryDate("2029-09-13");
+        employeeInfo.setNationality(faker.nation().nationality());
+        employeeInfo.setMaritalStatus("Married");
+        employeeInfo.setDateOfBirth("2019-12-03");
     }
 
     @Test
     public void Employee_01_Add_New(Method method) {
         ExtentTestManager.startTest(method.getName() + " - Run on " + browserName.toUpperCase(), "Employee_01_Add_New");
         addEmployeePage = employeeListPage.clickToAddEmployeeButton();
-        employeeId = addEmployeePage.getEmployeeId();
-        addEmployeePage.senkeyToFirstnameTextbox();
-        addEmployeePage.senkeyToLastnameTextbox();
-        personalDetailsPage = addEmployeePage.clickToSaveButton();
+
+        //employeeId = addEmployeePage.getEmployeeId();
+        employeeInfo.setEmployeeId(addEmployeePage.getEmployeeId());
+
+        /*addEmployeePage.senkeyToFirstnameTextbox(employeeInfo);
+        addEmployeePage.senkeyToLastnameTextbox(employeeInfo);
+        personalDetailsPage = addEmployeePage.clickToSaveButton();*/
+
+        personalDetailsPage = addEmployeePage.updateEmployeeFirstnameAndLastname(employeeInfo);
 
         personalDetailsPage.waitLoadingSpinnerInvisible();
 
-        Assert.assertEquals(personalDetailsPage.getFirstnameValue(), GlobalConstants.ORANGEHRM_DATATEST_FIRSTNAME);
-        Assert.assertEquals(personalDetailsPage.getLastnameValue(), GlobalConstants.ORANGEHRM_DATATEST_LASTNAME);
-        Assert.assertEquals(personalDetailsPage.getEmployeeIdValue(), employeeId);
+        Assert.assertEquals(personalDetailsPage.getFirstnameValue(), employeeInfo.getFirstName());
+        Assert.assertEquals(personalDetailsPage.getLastnameValue(), employeeInfo.getLastName());
+        Assert.assertEquals(personalDetailsPage.getEmployeeIdValue(), employeeInfo.getEmployeeId());
 
         employeeListPage = personalDetailsPage.clickToEmployeeListButton();
-        employeeListPage.senkeyToEmployeeIdSearchbox(employeeId);
+        employeeListPage.senkeyToEmployeeIdSearchbox(employeeInfo.getEmployeeId());
         employeeListPage.clickToSearchButton();
 
-        Assert.assertEquals(employeeListPage.getRecordDataByColumnName("Id"), employeeId);
-        Assert.assertEquals(employeeListPage.getRecordDataByColumnName("First (& Middle) Name"), GlobalConstants.ORANGEHRM_DATATEST_FIRSTNAME);
-        Assert.assertEquals(employeeListPage.getRecordDataByColumnName("Last Name"), GlobalConstants.ORANGEHRM_DATATEST_LASTNAME);
+        Assert.assertEquals(employeeListPage.getRecordDataByColumnName("Id"), employeeInfo.getEmployeeId());
+        Assert.assertEquals(employeeListPage.getRecordDataByColumnName("First (& Middle) Name"), employeeInfo.getFirstName());
+        Assert.assertEquals(employeeListPage.getRecordDataByColumnName("Last Name"), employeeInfo.getLastName());
     }
 
     @Test
     public void Employee_02_Personal_Details(Method method) {
         ExtentTestManager.startTest(method.getName() + " - Run on " + browserName.toUpperCase(), "Employee_02_Personal_Details");
 
-        personalDetailsPage = employeeListPage.clickToEditButtonById(employeeId);
+        personalDetailsPage = employeeListPage.clickToEditButtonById(employeeInfo.getEmployeeId());
 
-        //personalDetailsPage.isElementDisplayed(driver, PersonalDetailsPUI.PERSONAL_DETAILS_TITLE);
         personalDetailsPage.waitLoadingSpinnerInvisible();
-        Assert.assertEquals(personalDetailsPage.getFirstnameValue(), GlobalConstants.ORANGEHRM_DATATEST_FIRSTNAME);
-        Assert.assertEquals(personalDetailsPage.getLastnameValue(), GlobalConstants.ORANGEHRM_DATATEST_LASTNAME);
-        Assert.assertEquals(personalDetailsPage.getEmployeeIdValue(), employeeId);
 
-        personalDetailsPage.inputMiddleName();
-        personalDetailsPage.inputOtherId();
-        personalDetailsPage.inputDriverLicenseNumber();
-        personalDetailsPage.inputLicenseExpiryDate();
-        personalDetailsPage.selectNationality();
-        personalDetailsPage.selectMaritalStatus();
-        personalDetailsPage.inputDateOfBirth();
+        Assert.assertEquals(personalDetailsPage.getFirstnameValue(), employeeInfo.getFirstName());
+        Assert.assertEquals(personalDetailsPage.getLastnameValue(), employeeInfo.getLastName());
+        Assert.assertEquals(personalDetailsPage.getEmployeeIdValue(), employeeInfo.getEmployeeId());
+
+        /*personalDetailsPage.inputMiddleName(employeeInfo);
+        personalDetailsPage.inputOtherId(employeeInfo);
+        personalDetailsPage.inputDriverLicenseNumber(employeeInfo);
+        personalDetailsPage.inputLicenseExpiryDate(employeeInfo);
+        personalDetailsPage.selectNationality(employeeInfo);
+        personalDetailsPage.selectMaritalStatus(employeeInfo);
+        personalDetailsPage.inputDateOfBirth(employeeInfo);
         personalDetailsPage.selectMaleGender();
-        personalDetailsPage.clickToSaveButtonOfDetails();
+        personalDetailsPage.clickToSaveButtonOfDetails();*/
 
-        Assert.assertEquals(personalDetailsPage.getNationalityInfor(), "Japanese");
-        Assert.assertEquals(personalDetailsPage.getMaritalStatus(), "Married");
+        personalDetailsPage.updateEmployeeInfo(employeeInfo);
+
+        Assert.assertEquals(personalDetailsPage.getNationalityInfor(), employeeInfo.getNationality());
+        Assert.assertEquals(personalDetailsPage.getMaritalStatus(), employeeInfo.getMaritalStatus());
     }
 
     @Test
