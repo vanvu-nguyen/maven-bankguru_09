@@ -12,6 +12,7 @@ import pojoData.EmployeeInfo;
 import reportConfig.ExtentTestManager;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 public class PIM_01_Employee extends BaseTest {
     private WebDriver driver;
@@ -42,13 +43,14 @@ public class PIM_01_Employee extends BaseTest {
         adminInfo = AdminInfo.getAdmin();
 
         employeeInfo = EmployeeInfo.getEmployee();
+        faker = new Faker(new Locale("en-US"));
         employeeInfo.setFirstName(faker.name().firstName());
         employeeInfo.setLastName(faker.name().lastName());
         employeeInfo.setMiddleName(faker.name().lastName());
         employeeInfo.setOtherId(faker.phoneNumber().cellPhone());
         employeeInfo.setDriverLicense(faker.idNumber().valid());
         employeeInfo.setLicenseExpiryDate("2029-09-13");
-        employeeInfo.setNationality(faker.nation().nationality());
+        employeeInfo.setNationality("Japanese");
         employeeInfo.setMaritalStatus("Married");
         employeeInfo.setDateOfBirth("2019-12-03");
     }
