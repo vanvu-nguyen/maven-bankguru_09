@@ -1,5 +1,3 @@
-package pojoData;
-
 public class AdminInfo {
 
     public static AdminInfo getAdmin() {
