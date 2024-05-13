@@ -1,6 +1,8 @@
 package commons;
 
 import org.openqa.selenium.WebDriver;
+import pageObjects.SauceDemo.SauceDemoLoginPO;
+import pageObjects.SauceDemo.SauceDemoPO;
 import pageObjects.admin.*;
 
 public class PageGeneratorManager {
@@ -56,5 +58,9 @@ public class PageGeneratorManager {
     public static SalaryPO getSalaryPage(WebDriver driver) {
         return new SalaryPO(driver);
     }
+
+    public static SauceDemoPO getSauceDemoPage(WebDriver driver) {return new SauceDemoPO(driver); };
+
+    public static SauceDemoLoginPO getSauceDemoLoginPage(WebDriver driver) {return new SauceDemoLoginPO(driver);};
 
 }

@@ -175,7 +175,7 @@
                 <configuration>
                     <!-- Run TestNG xml file -->
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/RunOrangeHRM.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/RunSauceDemoMultipleServer.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
                     <!-- Argument -->

@@ -1,0 +1,1 @@
+{"uuid":"fa169d0a-61c8-4da7-a05a-b38455201631","name":"user.product.Product_01_ASD_DESC","children":["3743b388-ff03-4bfb-95b7-f1181f6a189e"],"befores":[{"name":"beforeClass","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1715575802138,"stop":1715575808215}],"afters":[],"start":1715575802112,"stop":1715575809455}

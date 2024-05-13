@@ -4,12 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxDriverService;
-import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -18,7 +14,6 @@ import org.testng.annotations.BeforeSuite;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Random;
 
@@ -47,6 +42,40 @@ public class BaseTest {
         driver.get("https://demo.nopcommerce.com/");
         driver.manage().window().maximize();
         return driver;
+    }
+
+    protected WebDriver getBrowserDriverByServerName(String browser, String server) {
+        BrowserList browserName = BrowserList.valueOf(browser.toUpperCase());
+        switch (browserName) {
+            case CHROME: driver = new ChromeDriver();
+                break;
+            case EDGE: driver = new EdgeDriver();
+                break;
+            case FIREFOX: driver = new FirefoxDriver();
+                break;
+            case SAFARI: driver = new SafariDriver();
+                break;
+            default: throw new RuntimeException("Browser name is not valid");
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
+        driver.get(getUrlWithGivenServer(server));
+        driver.manage().window().maximize();
+        return driver;
+    }
+
+    protected String getUrlWithGivenServer(String server) {
+        String url;
+        EnvironmentList serverName = EnvironmentList.valueOf(server.toUpperCase());
+        switch (serverName) {
+            case DEV: {url = "https://www.saucedemo.com/";
+                break;}
+            case TEST: {url = "https://www.test.saucedemo.com/";
+                break;}
+            case STAGING: {url = "https://www.staging.saucedemo.com/";
+                break;}
+            default: throw new RuntimeException("Wrong environment name");
+        }
+        return url;
     }
 
     protected WebDriver getBrowserDriver(String browser, String url) {

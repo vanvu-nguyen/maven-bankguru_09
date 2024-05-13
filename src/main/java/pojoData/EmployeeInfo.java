@@ -1,3 +1,5 @@
+package pojoData;
+
 import lombok.Getter;
 import lombok.Setter;
 

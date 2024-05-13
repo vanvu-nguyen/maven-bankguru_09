@@ -34,4 +34,8 @@ public class GlobalConstants {
     public static final String USERNAME_ADMIN_ACCOUNT = "automationfc";
     public static final String PASSWORD_ADMIN_ACCOUNT = "Automationfc1$";
 
+    // SauceDemo test account
+    public static final String USERNAME_SAUCEDEMO = "standard_user";
+    public static final String PASSWORD_SAUCEDEMO = "secret_sauce";
+
 }

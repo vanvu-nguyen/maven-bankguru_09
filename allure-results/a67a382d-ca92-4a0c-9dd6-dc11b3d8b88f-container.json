@@ -1,0 +1,1 @@
+{"uuid":"a67a382d-ca92-4a0c-9dd6-dc11b3d8b88f","name":"SauceDemo","children":["3a717f7f-81ad-4628-9936-8c5db70c250a"],"befores":[{"name":"deleteFileInReport","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1715594864864,"stop":1715594864872}],"afters":[],"start":1715594864835,"stop":1715594875536}
