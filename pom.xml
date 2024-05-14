@@ -30,6 +30,7 @@
         <extent.version>5.1.0</extent.version>
         <log4j.version>2.19.0</log4j.version>
         <reportng.version>1.1.4</reportng.version>
+        <environment>DEV</environment>
     </properties>
 
     <!-- Quản lí thư viện -->
@@ -175,7 +176,7 @@
                 <configuration>
                     <!-- Run TestNG xml file -->
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/RunSauceDemoMultipleServer.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/RunSauceDemo-${environment}.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
                     <!-- Argument -->

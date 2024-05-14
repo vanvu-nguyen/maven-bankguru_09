@@ -16,7 +16,7 @@
         </classes>
     </test>
 
-    <!--<test verbose="2" preserve-order="true" name="Run on Chrome">
+    <test verbose="2" preserve-order="true" name="Run on Chrome">
         <parameter name="browser" value="chrome"/>
         <classes>
             <class name="user.product.Product_01_ASD_DESC"/>
@@ -28,6 +28,6 @@
         <classes>
             <class name="user.product.Product_01_ASD_DESC"/>
         </classes>
-    </test>-->
+    </test>
 
 </suite>
