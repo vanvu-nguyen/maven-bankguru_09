@@ -59,8 +59,16 @@ public class PageGeneratorManager {
         return new SalaryPO(driver);
     }
 
+    // SauceDemo
     public static SauceDemoPO getSauceDemoPage(WebDriver driver) {return new SauceDemoPO(driver); };
 
     public static SauceDemoLoginPO getSauceDemoLoginPage(WebDriver driver) {return new SauceDemoLoginPO(driver);};
 
+    // WordPress
+    public static pageObjects.WordPress.LoginPO getWordPressLoginPage(WebDriver driver) {return new pageObjects.WordPress.LoginPO(driver);
+    }
+    public static pageObjects.WordPress.DashboardPO getWordPressDashboardPage(WebDriver driver) {return new pageObjects.WordPress.DashboardPO(driver);
+    }
+    public static pageObjects.WordPress.UserPO getWordPressUserPage(WebDriver driver) {return new pageObjects.WordPress.UserPO(driver);
+    }
 }

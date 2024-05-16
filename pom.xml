@@ -149,6 +149,14 @@
             <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -176,7 +184,7 @@
                 <configuration>
                     <!-- Run TestNG xml file -->
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/RunSauceDemo-${environment}.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/RunWordPress-${environment}.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
                     <!-- Argument -->

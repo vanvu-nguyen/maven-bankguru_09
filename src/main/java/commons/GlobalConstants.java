@@ -38,4 +38,8 @@ public class GlobalConstants {
     public static final String USERNAME_SAUCEDEMO = "standard_user";
     public static final String PASSWORD_SAUCEDEMO = "secret_sauce";
 
+    // Wordpress (DB name: automationtesting)
+    public static final String USERNAME = "automationtesting";
+    public static final String PASSWORD = "VN8jCVAlb7c3XckUFZ";
+
 }
