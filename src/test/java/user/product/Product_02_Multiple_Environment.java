@@ -22,7 +22,7 @@ public class Product_02_Multiple_Environment extends BaseTest {
     @Parameters({"browser", "server"})
     @BeforeClass
     public void beforeClass (String browser, String server) {
-        driver = getBrowserDriverByServerName(browser, server);
+        driver = getBrowserDriver(browser, server);
         browserName = browser;
         sauceDemoLoginPage = PageGeneratorManager.getSauceDemoLoginPage(driver);
         sauceDemoPage = sauceDemoLoginPage.loginToSite();

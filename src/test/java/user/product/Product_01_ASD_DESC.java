@@ -4,10 +4,7 @@ import commons.BaseTest;
 import commons.PageGeneratorManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pageObjects.SauceDemo.SauceDemoLoginPO;
 import pageObjects.SauceDemo.SauceDemoPO;
 import reportConfig.ExtentTestManager;
@@ -19,10 +16,10 @@ public class Product_01_ASD_DESC extends BaseTest {
     private SauceDemoPO sauceDemoPage;
     private SauceDemoLoginPO sauceDemoLoginPage;
     private String browserName;
-    @Parameters({"browser", "url"})
+    @Parameters({"browser", "server", "envName", "ipAddress", "portNumber"})
     @BeforeClass
-    public void beforeClass (String browser, String url) {
-        driver = getBrowserDriver(browser, url);
+    public void beforeClass (@Optional("chrome") String browser, @Optional("dev") String server, @Optional("local") String envName, @Optional("localhost") String ipAddress, @Optional("4444") String portNumber) {
+        driver = getBrowserDriver(browser, server, envName, ipAddress, portNumber);
         browserName = browser;
         sauceDemoLoginPage = PageGeneratorManager.getSauceDemoLoginPage(driver);
         sauceDemoPage = sauceDemoLoginPage.loginToSite();

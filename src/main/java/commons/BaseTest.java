@@ -1,5 +1,7 @@
 package commons;
 
+import factoryEnvironment.GridFactory;
+import factoryEnvironment.LocalFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +15,7 @@ import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Random;
@@ -25,41 +28,30 @@ public class BaseTest {
         log = LogManager.getLogger(getClass());
     }
 
-    protected WebDriver getBrowserDriver(String browser) {
+    protected WebDriver getBrowserDriver(String browser, String server, String envName, String ipAddress, String portNumber) {
         BrowserList browserName = BrowserList.valueOf(browser.toUpperCase());
-        switch (browserName) {
-            case CHROME: driver = new ChromeDriver();
+        try {
+            switch (envName) {
+                case "local": this.driver = new LocalFactory(browser).createDriver();
+                    break;
+                case "grid": this.driver = new GridFactory(browser, ipAddress, portNumber).createDriver();
+                    break;
+            /*case "browserStack":
                 break;
-            case EDGE: driver = new EdgeDriver();
+            case "saucelab":
                 break;
-            case FIREFOX: driver = new FirefoxDriver();
+            case "crossBrowser":
                 break;
-            case SAFARI: driver = new SafariDriver();
-                break;
-            default: throw new RuntimeException("Browser name is not valid");
+            case "lambda":
+                break;*/
+                default: this.driver = new LocalFactory(browser).createDriver();
+            }
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
+            driver.get(getUrlWithGivenServer(server));
+            driver.manage().window().maximize();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
-        driver.get("https://demo.nopcommerce.com/");
-        driver.manage().window().maximize();
-        return driver;
-    }
-
-    protected WebDriver getBrowserDriverByServerName(String browser, String server) {
-        BrowserList browserName = BrowserList.valueOf(browser.toUpperCase());
-        switch (browserName) {
-            case CHROME: driver = new ChromeDriver();
-                break;
-            case EDGE: driver = new EdgeDriver();
-                break;
-            case FIREFOX: driver = new FirefoxDriver();
-                break;
-            case SAFARI: driver = new SafariDriver();
-                break;
-            default: throw new RuntimeException("Browser name is not valid");
-        }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
-        driver.get(getUrlWithGivenServer(server));
-        driver.manage().window().maximize();
         return driver;
     }
 
