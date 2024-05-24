@@ -1,15 +1,10 @@
 package factoryEnvironment;
 
 import commons.BrowserList;
-import commons.EnvironmentList;
-import commons.GlobalConstants;
+import factoryBrowser.ChromeDriverManager;
+import factoryBrowser.EdgeDriverManager;
+import factoryBrowser.FirefoxDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.safari.SafariDriver;
-
-import java.time.Duration;
 
 public class LocalFactory {
     private String browserName;
@@ -20,13 +15,13 @@ public class LocalFactory {
     public WebDriver createDriver() {
         BrowserList browserName = BrowserList.valueOf(this.browserName.toUpperCase());
         switch (browserName) {
-            case CHROME: driver = new ChromeDriver();
+            case CHROME: driver = new ChromeDriverManager().getBrowserDriver();
                 break;
-            case EDGE: driver = new EdgeDriver();
+            case EDGE: driver = new EdgeDriverManager().getBrowserDriver();
                 break;
-            case FIREFOX: driver = new FirefoxDriver();
+            case FIREFOX: driver = new FirefoxDriverManager().getBrowserDriver();
                 break;
-            case SAFARI: driver = new SafariDriver();
+            case SAFARI: driver = new FirefoxDriverManager().getBrowserDriver();
                 break;
             default: throw new RuntimeException("Browser name is not valid");
         }
