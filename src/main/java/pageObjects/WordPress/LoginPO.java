@@ -18,9 +18,9 @@ public class LoginPO extends BaseAction {
 
     public DashboardPO loginToWordPress() {
         waitForElementVisible(driver, WordPressLoginPUI.USERNAME_LOGIN_INPUT);
-        senkeyToElement(driver, WordPressLoginPUI.USERNAME_LOGIN_INPUT, GlobalConstants.USERNAME);
+        senkeyToElement(driver, WordPressLoginPUI.USERNAME_LOGIN_INPUT, GlobalConstants.getGlobalConstants().getUsername());
         waitForElementVisible(driver, WordPressLoginPUI.PASSWORD_LOGIN_INPUT);
-        senkeyToElement(driver, WordPressLoginPUI.PASSWORD_LOGIN_INPUT, GlobalConstants.PASSWORD);
+        senkeyToElement(driver, WordPressLoginPUI.PASSWORD_LOGIN_INPUT, GlobalConstants.getGlobalConstants().getPassword());
         waitForElementClickable(driver, WordPressLoginPUI.LOGIN_BUTTON);
         clickToElement(driver, WordPressLoginPUI.LOGIN_BUTTON);
         return PageGeneratorManager.getWordPressDashboardPage(driver);

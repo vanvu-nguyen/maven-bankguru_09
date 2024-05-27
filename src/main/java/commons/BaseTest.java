@@ -21,7 +21,7 @@ import java.time.Duration;
 import java.util.Random;
 
 public class BaseTest {
-    private WebDriver driver;
+    protected static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     protected final Logger log;
 
     public BaseTest() {
@@ -32,9 +32,9 @@ public class BaseTest {
         BrowserList browserName = BrowserList.valueOf(browser.toUpperCase());
         try {
             switch (envName) {
-                case "local": this.driver = new LocalFactory(browser).createDriver();
+                case "local": this.driver.set(new LocalFactory(browser).createDriver());
                     break;
-                case "grid": this.driver = new GridFactory(browser, ipAddress, portNumber).createDriver();
+                case "grid": this.driver.set(new GridFactory(browser, ipAddress, portNumber).createDriver());
                     break;
             /*case "browserStack":
                 break;
@@ -44,15 +44,15 @@ public class BaseTest {
                 break;
             case "lambda":
                 break;*/
-                default: this.driver = new LocalFactory(browser).createDriver();
+                default: this.driver.set(new LocalFactory(browser).createDriver());
             }
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
-            driver.get(getUrlWithGivenServer(server));
-            driver.manage().window().maximize();
+            driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.getGlobalConstants().getLongTimeout()));
+            driver.get().get(getUrlWithGivenServer(server));
+            driver.get().manage().window().maximize();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return driver;
+        return driver.get();
     }
 
     protected String getUrlWithGivenServer(String server) {
@@ -76,22 +76,22 @@ public class BaseTest {
         BrowserList browserName = BrowserList.valueOf(browser.toUpperCase());
         switch (browserName) {
             case CHROME:
-                driver = new ChromeDriver();
+                driver.set(new ChromeDriver());
                 break;
             case EDGE:
-                driver = new EdgeDriver();
+                driver.set(new EdgeDriver());
                 break;
             case FIREFOX:
-                driver = new FirefoxDriver();
+                driver.set(new FirefoxDriver());
                 break;
-            case SAFARI: driver = new SafariDriver();
+            case SAFARI: driver.set(new SafariDriver());
                 break;
             default: throw new RuntimeException("Browser name is not valid");
         }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.LONG_TIMEOUT));
-        driver.get(url);
-        driver.manage().window().maximize();
-        return driver;
+        driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.getGlobalConstants().getLongTimeout()));
+        driver.get().get(url);
+        driver.get().manage().window().maximize();
+        return driver.get();
     }
 
     protected String getEmailAddress() {
@@ -102,7 +102,7 @@ public class BaseTest {
     protected void closeBrowser(WebDriver driver) {
         String cmd = null;
         try {
-            String osName = GlobalConstants.OS_NAME.toLowerCase();
+            String osName = GlobalConstants.getGlobalConstants().getOsName().toLowerCase();
             log.info("OS name = " + osName);
 
             String driverInstanceName = driver.toString().toLowerCase();
@@ -193,7 +193,7 @@ public class BaseTest {
     }
 
     public WebDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
     @BeforeSuite
@@ -207,7 +207,7 @@ public class BaseTest {
 
     public void deleteAllFileInFolder(String folderName) {
         try {
-            String pathFolderDownload = GlobalConstants.RELATIVE_PROJECT_PATH + File.separator + folderName;
+            String pathFolderDownload = GlobalConstants.getGlobalConstants().getRelativeProjectPath() + File.separator + folderName;
             File file = new File(pathFolderDownload);
             File[] listOfFiles = file.listFiles();
             if (listOfFiles.length != 0) {

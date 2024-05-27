@@ -15,9 +15,9 @@ public class SauceDemoLoginPO extends BaseAction {
 
     public SauceDemoPO loginToSite() {
         waitForElementVisible(driver, SauceDemoLoginPUI.USERNAME_INPUT);
-        senkeyToElement(driver, SauceDemoLoginPUI.USERNAME_INPUT, GlobalConstants.USERNAME_SAUCEDEMO);
+        senkeyToElement(driver, SauceDemoLoginPUI.USERNAME_INPUT, GlobalConstants.getGlobalConstants().getUsernameSaucedemo());
         waitForElementVisible(driver, SauceDemoLoginPUI.PASSWORD_INPUT);
-        senkeyToElement(driver, SauceDemoLoginPUI.PASSWORD_INPUT, GlobalConstants.PASSWORD_SAUCEDEMO);
+        senkeyToElement(driver, SauceDemoLoginPUI.PASSWORD_INPUT, GlobalConstants.getGlobalConstants().getPasswordSaucedemo());
         waitForElementClickable(driver, SauceDemoLoginPUI.LOGIN_BUTTON);
         clickToElement(driver, SauceDemoLoginPUI.LOGIN_BUTTON);
         return PageGeneratorManager.getSauceDemoPage(driver);

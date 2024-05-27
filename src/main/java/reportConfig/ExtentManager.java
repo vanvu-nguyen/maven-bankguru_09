@@ -9,7 +9,7 @@ public class ExtentManager {
     public static final ExtentReports extentReports = new ExtentReports();
 
     public synchronized static ExtentReports createExtentReports() {
-        ExtentSparkReporter reporter = new ExtentSparkReporter(GlobalConstants.RELATIVE_PROJECT_PATH + "/extentReport/HTMLReport.html");
+        ExtentSparkReporter reporter = new ExtentSparkReporter(GlobalConstants.getGlobalConstants().getRelativeProjectPath() + "/extentReport/HTMLReport.html");
         reporter.config().setReportName("OrangeHRM HTML Report");
         reporter.config().setDocumentTitle("OrangeHRM HTML Report");
         reporter.config().setTimelineEnabled(true);
@@ -20,7 +20,7 @@ public class ExtentManager {
         extentReports.setSystemInfo("Company", "Automation FC");
         extentReports.setSystemInfo("Project", "OrangeHRM");
         extentReports.setSystemInfo("Team", "OrangeHRM Automation Testing Team");
-        extentReports.setSystemInfo("JDK version", GlobalConstants.JAVA_VERSION);
+        extentReports.setSystemInfo("JDK version", GlobalConstants.getGlobalConstants().getJavaVersion());
         return extentReports;
     }
 }

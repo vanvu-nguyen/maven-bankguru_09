@@ -52,7 +52,7 @@ public class BasePage extends BaseTest {
     }
 
     public Alert waitForAlertPresence(WebDriver driver) {
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout()));
         return explicitWait.until(ExpectedConditions.alertIsPresent());
     }
 
@@ -209,7 +209,7 @@ public class BasePage extends BaseTest {
         getElement(driver, parentLocator).click();
         sleepInSecond(1);
         WebDriverWait explicitWait;
-        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT));
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout()));
         List<WebElement> allItems = explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(getByLocator(childItemLocator)));
         for (WebElement item : allItems) {
             if (item.getText().trim().equals(expectedItem)) {
@@ -293,9 +293,9 @@ public class BasePage extends BaseTest {
 
     public boolean isElementUndisplayed(WebDriver driver, String locator) {
         System.out.println("Start time =" + new Date().toString());
-        overrideGlobalTimeout(driver,GlobalConstants.SHORT_TIMEOUT);
+        overrideGlobalTimeout(driver,GlobalConstants.getGlobalConstants().getShortTimeout());
         List<WebElement> elements = getListElement(driver, locator);
-        overrideGlobalTimeout(driver,GlobalConstants.LONG_TIMEOUT);
+        overrideGlobalTimeout(driver,GlobalConstants.getGlobalConstants().getLongTimeout());
 
         if (elements.size() == 0) {
             System.out.println("Element not in DOM");
@@ -313,9 +313,9 @@ public class BasePage extends BaseTest {
 
     public boolean isElementUndisplayed(WebDriver driver, String locator, String... value) {
         System.out.println("Start time =" + new Date().toString());
-        overrideGlobalTimeout(driver,GlobalConstants.SHORT_TIMEOUT);
+        overrideGlobalTimeout(driver,GlobalConstants.getGlobalConstants().getShortTimeout());
         List<WebElement> elements = getListElement(driver, getDynamicLocator(locator, value));
-        overrideGlobalTimeout(driver,GlobalConstants.LONG_TIMEOUT);
+        overrideGlobalTimeout(driver,GlobalConstants.getGlobalConstants().getLongTimeout());
 
         if (elements.size() == 0) {
             System.out.println("Element not in DOM");
@@ -344,7 +344,7 @@ public class BasePage extends BaseTest {
     }
 
     public void switchToIframe(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(getByLocator(locator)));
     }
 
     public void switchToDefaultContent(WebDriver driver) {
@@ -421,7 +421,7 @@ public class BasePage extends BaseTest {
 
     public boolean areJQueryAndJSLoadedSuccess(WebDriver driver) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT));
+        WebDriverWait explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout()));
         ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
@@ -455,35 +455,35 @@ public class BasePage extends BaseTest {
     }
 
     public void waitForElementVisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
     }
 
     public void waitForElementVisible(WebDriver driver, String locator, String... restParams) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(getDynamicLocator(locator, restParams))));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.visibilityOfElementLocated(getByLocator(getDynamicLocator(locator, restParams))));
     }
 
     public void waitForListElementVisible(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.visibilityOfAllElements(getListElement(driver, locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.visibilityOfAllElements(getListElement(driver, locator)));
     }
 
     public boolean waitForElementInvisible(WebDriver driver, String locator) {
-        return new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
+        return new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.invisibilityOfElementLocated(getByLocator(locator)));
     }
 
     public boolean waitForListElementInvisible(WebDriver driver, String locator) {
-        return new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.invisibilityOfAllElements(getListElement(driver, locator)));
+        return new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.invisibilityOfAllElements(getListElement(driver, locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(getByLocator(locator)));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.elementToBeClickable(getByLocator(locator)));
     }
 
     public void waitForElementClickable(WebDriver driver, WebElement element) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(element));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public void waitForElementClickable(WebDriver driver, String locator, String... restParams) {
-        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.SHORT_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(getByLocator(getDynamicLocator(locator, restParams))));
+        new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.getGlobalConstants().getShortTimeout())).until(ExpectedConditions.elementToBeClickable(getByLocator(getDynamicLocator(locator, restParams))));
     }
 
     public void uploadMultipleFile(WebDriver driver, String... filesToUpload) {
@@ -491,7 +491,7 @@ public class BasePage extends BaseTest {
         // List<String> fileNames = List.of(filesToUpload);
         String fullFileName = "";
         for (String file: filesToUpload) {
-            fullFileName = fullFileName + GlobalConstants.UPLOAD_PATH + file + "\n";
+            fullFileName = fullFileName + GlobalConstants.getGlobalConstants().getUploadPath() + file + "\n";
         }
         String finalFileName = fullFileName.trim();
         System.out.println(finalFileName);

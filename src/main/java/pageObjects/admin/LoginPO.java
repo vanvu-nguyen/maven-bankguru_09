@@ -16,12 +16,12 @@ public class LoginPO extends BaseAction {
 
     public void senkeyToUsernameTextbox() {
         waitForElementVisible(driver, LoginPUI.USERNAME_TEXTBOX);
-        senkeyToElement(driver, LoginPUI.USERNAME_TEXTBOX, GlobalConstants.USERNAME_ADMIN_ACCOUNT);
+        senkeyToElement(driver, LoginPUI.USERNAME_TEXTBOX, GlobalConstants.getGlobalConstants().getUsernameAdminAccount());
     }
 
     public void senkeyToPasswordTextbox() {
         waitForElementVisible(driver, LoginPUI.PASSWORD_TEXTBOX);
-        senkeyToElement(driver, LoginPUI.PASSWORD_TEXTBOX, GlobalConstants.PASSWORD_ADMIN_ACCOUNT);
+        senkeyToElement(driver, LoginPUI.PASSWORD_TEXTBOX, GlobalConstants.getGlobalConstants().getPasswordAdminAccount());
     }
 
     public DashboardPO clickToLoginButton() {

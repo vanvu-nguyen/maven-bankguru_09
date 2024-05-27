@@ -20,6 +20,10 @@ public class Product_01_ASD_DESC extends BaseTest {
     @BeforeClass
     public void beforeClass (@Optional("chrome") String browser, @Optional("dev") String server, @Optional("local") String envName, @Optional("localhost") String ipAddress, @Optional("4444") String portNumber) {
         driver = getBrowserDriver(browser, server, envName, ipAddress, portNumber);
+
+        System.out.println("Thread ID = " + Thread.currentThread().getId() + browser);
+        System.out.println("Thread ID = " + Thread.currentThread().getId() + driver.toString());
+
         browserName = browser;
         sauceDemoLoginPage = PageGeneratorManager.getSauceDemoLoginPage(driver);
         sauceDemoPage = sauceDemoLoginPage.loginToSite();
